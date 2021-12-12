@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import Label, ttk
 import pyodbc
-from sshtunnel import SSHTunnelForwarder
+from sshtunnel import _ThreadingForwardServer, SSHTunnelForwarder
 import matplotlib
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -35,15 +35,28 @@ def info():
             horas = [_[0] for _ in tupleall]
             #fecha = time.strftime("%Y-%m-%d %H:%M:%S.000", horas[0])
             print(horas)
-    consulta = "select hora from Labores where labores = ?;"
+    consulta = "select hora from Labores where labores = ? and hora >= '2021-12-11';"
     cursor.execute(consulta,'Clientes')
     tupleall = cursor.fetchall()
     horas = [_[0] for _ in tupleall]
-    print(horas)
+    if (horas[1].day - horas[0].day) == 0:
+        durclientes = int((horas[1].timestamp() - horas[0].timestamp())/60)
+    else:
+        durclientes = 0
+    consulta = "select hora from Labores where labores = ? and hora >= '2021-12-07';"
+    cursor.execute(consulta,'Contabilidad')
+    tupleall = cursor.fetchall()
+    horas = [_[0] for _ in tupleall]
+    if (horas[1].day - horas[0].day) == 0:
+        durcontabilidad = int((horas[1].timestamp() - horas[0].timestamp())/60)
+    else:
+        durcontabilidad = 0
+    print("duracion clientes ", durclientes, " minutos")
+    print("duracion contabilidad ", durcontabilidad, " minutos")
     fig = plt.figure()
     ax = fig.add_axes([0,0,1,1])
     langs = ['Clientes','Contabilidad','IT','Finca','Fabricación','Soporte Remoto','Legal','Cobros','Proveedores','Organización','SGC','SST','I&D','Publicidad']
-    students = [ 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ]
+    students = [ durclientes, durcontabilidad, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ]
     ax.bar(langs,students)
     plt.show()
 
