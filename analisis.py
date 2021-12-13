@@ -6,6 +6,7 @@ import matplotlib
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
+import time
 
 port='1433'
 bd = 'Parte Horas' 
@@ -16,7 +17,6 @@ def info():
     try:
         sv = '192.168.1.89'
         conexion = pyodbc.connect("DRIVER={ODBC Driver 11 for SQL Server}; SERVER="+sv+"; port="+port+";DATABASE="+bd+";UID="+usuario+";PWD="+contrasena)
-        cursor = conexion.cursor()
     except:
         sv = '127.0.0.1'
         conexion = pyodbc.connect("DRIVER={ODBC Driver 11 for SQL Server}; SERVER="+sv+"; port="+port+";DATABASE="+bd+";UID="+usuario+";PWD="+contrasena)
@@ -34,11 +34,14 @@ def info():
             tupleall = cursor.fetchall()
             horas = [_[0] for _ in tupleall]
             #fecha = time.strftime("%Y-%m-%d %H:%M:%S.000", horas[0])
-            print(horas)
+    cursor = conexion.cursor()
     consulta = "select hora from Labores where labores = ? and hora >= '2021-12-11';"
     cursor.execute(consulta,'Clientes')
     tupleall = cursor.fetchall()
     horas = [_[0] for _ in tupleall]
+    for i in horas:
+        print(i.day)
+    
     if (horas[1].day - horas[0].day) == 0:
         durclientes = int((horas[1].timestamp() - horas[0].timestamp())/60)
     else:

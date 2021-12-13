@@ -25,7 +25,6 @@ except:
     remote_bind_address=('192.168.1.89', 1433)) as server:
         server.start()
         conexion = pyodbc.connect("DRIVER={ODBC Driver 11 for SQL Server}; SERVER="+sv+"; port="+port+";DATABASE="+bd+";UID="+usuario+";PWD="+contrasena)
-        cursor = conexion.cursor()
 
 def Actualizardb():
     named_tuple = time.localtime() # get struct_time
@@ -33,8 +32,7 @@ def Actualizardb():
     cursor = conexion.cursor()
     consulta = "insert into Labores (labores, hora) values (?,?);"
     cursor.execute(consulta, nombre_cb.get(),fecha)
-    cursor.commit()
-    print(nombre_cb.get())
+    cursor.commit()       
 main = tk.Tk()
 main.title("Parte Horas")
 main.columnconfigure(1, weight=2)
@@ -55,10 +53,10 @@ botonAn = ttk.Button(
     command=lambda:info()
 )
 botonAn.grid(column=2, row=2, sticky=tk.E, padx=5, pady=0)
-
 nombre_cb = ttk.Combobox(main, textvariable=selected_labor, width="18")
 nombre_cb['values'] = labores
 nombre_cb['state'] = 'readonly'  # normal
 nombre_cb.grid(row=1, column=1, padx=5, pady=5)
+nombre_cb.set("Horas Trabajadas")
 nombre_cb.bind('<<ComboboxSelected>>', Actualizardb())
 main.mainloop()
