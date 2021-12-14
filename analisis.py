@@ -41,11 +41,9 @@ def info():
     horas = [_[0] for _ in tupleall]
     for i in horas:
         print(i.day)
-    
-    if (horas[1].day - horas[0].day) == 0:
+        print(i.timestamp())
         durclientes = int((horas[1].timestamp() - horas[0].timestamp())/60)
-    else:
-        durclientes = 0
+
     consulta = "select hora from Labores where labores = ? and hora >= '2021-12-07';"
     cursor.execute(consulta,'Contabilidad')
     tupleall = cursor.fetchall()
