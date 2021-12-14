@@ -36,22 +36,22 @@ def info():
             #fecha = time.strftime("%Y-%m-%d %H:%M:%S.000", horas[0])
 
     cursor = conexion.cursor()
-    consulta = "select hora from Labores where labores = ?;"
-    cursor.execute(consulta,'Clientes')
+    consulta = "select hora from Labores;"
+    cursor.execute(consulta)
     tupleall = cursor.fetchall()
     horas = [_[0] for _ in tupleall]
 
-    cursor.execute("select id from Labores where labores = 'Clientes';")
+    cursor.execute("select id from Labores;")
     tupleid = cursor.fetchall()
     ids = [_[0] for _ in tupleid]
-    
+
     i = 0
     while i < len(horas) - 1:
-
         if (horas[i + 1].day == horas[i].day):
+            print(ids[i], horas[i])
             durclientes = int((horas[i].timestamp() - horas[i + 1].timestamp())/60)
         else:
-            pass
+            print("Otros dias ", ids[i], horas[i])
         i = i + 1
     consulta = "select hora from Labores where labores = ?;"
     cursor.execute(consulta,'Contabilidad')
