@@ -34,17 +34,26 @@ def info():
             tupleall = cursor.fetchall()
             horas = [_[0] for _ in tupleall]
             #fecha = time.strftime("%Y-%m-%d %H:%M:%S.000", horas[0])
+
     cursor = conexion.cursor()
-    consulta = "select hora from Labores where labores = ? and hora >= '2021-12-11';"
+    consulta = "select hora from Labores where labores = ?;"
     cursor.execute(consulta,'Clientes')
     tupleall = cursor.fetchall()
     horas = [_[0] for _ in tupleall]
-    for i in horas:
-        print(i.day)
-        print(i.timestamp())
-        durclientes = int((horas[1].timestamp() - horas[0].timestamp())/60)
 
-    consulta = "select hora from Labores where labores = ? and hora >= '2021-12-07';"
+    cursor.execute("select id from Labores where labores = 'Clientes';")
+    tupleid = cursor.fetchall()
+    ids = [_[0] for _ in tupleid]
+    
+    i = 0
+    while i < len(horas) - 1:
+
+        if (horas[i + 1].day == horas[i].day):
+            durclientes = int((horas[i].timestamp() - horas[i + 1].timestamp())/60)
+        else:
+            pass
+        i = i + 1
+    consulta = "select hora from Labores where labores = ?;"
     cursor.execute(consulta,'Contabilidad')
     tupleall = cursor.fetchall()
     horas = [_[0] for _ in tupleall]
@@ -60,4 +69,3 @@ def info():
     students = [ durclientes, durcontabilidad, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ]
     ax.bar(langs,students)
     plt.show()
-
