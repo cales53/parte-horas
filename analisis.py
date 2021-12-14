@@ -12,6 +12,7 @@ port='1433'
 bd = 'Parte Horas' 
 usuario = 'usuario' 
 contrasena = 'Manager21' 
+langs = ['Clientes','Contabilidad','IT','Finca','Fabricación','Soporte Remoto','Legal','Cobros','Proveedores','Organización','SGC','SST','I&D','Publicidad']
 
 def info():
     try:
@@ -48,10 +49,12 @@ def info():
     i = 0
     while i < len(horas) - 1:
         if (horas[i + 1].day == horas[i].day):
-            print(ids[i], horas[i])
+            #print(ids[i], horas[i])
             durclientes = int((horas[i].timestamp() - horas[i + 1].timestamp())/60)
         else:
             print("Otros dias ", ids[i], horas[i])
+            for x in langs:
+                print(x)
         i = i + 1
     consulta = "select hora from Labores where labores = ?;"
     cursor.execute(consulta,'Contabilidad')
@@ -65,7 +68,7 @@ def info():
     print("duracion contabilidad ", durcontabilidad, " minutos")
     fig = plt.figure()
     ax = fig.add_axes([0,0,1,1])
-    langs = ['Clientes','Contabilidad','IT','Finca','Fabricación','Soporte Remoto','Legal','Cobros','Proveedores','Organización','SGC','SST','I&D','Publicidad']
+    
     students = [ durclientes, durcontabilidad, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ]
     ax.bar(langs,students)
     plt.show()
