@@ -41,34 +41,74 @@ def info():
     cursor.execute(consulta)
     tupleall = cursor.fetchall()
     horas = [_[0] for _ in tupleall]
-
+    
     cursor.execute("select id from Labores;")
     tupleid = cursor.fetchall()
     ids = [_[0] for _ in tupleid]
 
+    cursor.execute("select labores from Labores;")
+    tuplelab = cursor.fetchall()
+    labores = [_[0] for _ in tuplelab]
+
     i = 0
     while i < len(horas) - 1:
         if (horas[i + 1].day == horas[i].day):
-            #print(ids[i], horas[i])
-            durclientes = int((horas[i].timestamp() - horas[i + 1].timestamp())/60)
+            if (labores[i] != labores[i - 1]):
+                #print(labores[i], labores[i + 1])
+                #print(ids[i], horas[i])
+                if (labores[i] == langs[0]):
+                    durclientes = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[1]):
+                    durcontabilidad = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[2]):
+                    durit = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[3]):
+                    durfin = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[4]):
+                    durfab = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[5]):
+                    dursop = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[6]):
+                    durleg = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[7]):
+                    durcob = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[8]):
+                    durpro = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[9]):
+                    duror = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[10]):
+                    dursgc = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[11]):
+                    dursst = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[12]):
+                    durid = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                elif (labores[i] == langs[13]):
+                    durpub = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+
         else:
-            print("Otros dias ", ids[i], horas[i])
-            for x in langs:
-                print(x)
+            pass
+            #print("Otros dias ", ids[i], horas[i])
+            '''for x in langs:
+                print(x)'''
         i = i + 1
-    consulta = "select hora from Labores where labores = ?;"
-    cursor.execute(consulta,'Contabilidad')
-    tupleall = cursor.fetchall()
-    horas = [_[0] for _ in tupleall]
-    if (horas[1].day - horas[0].day) == 0:
-        durcontabilidad = int((horas[1].timestamp() - horas[0].timestamp())/60)
-    else:
-        durcontabilidad = 0
     print("duracion clientes ", durclientes, " minutos")
     print("duracion contabilidad ", durcontabilidad, " minutos")
+    print("duracion IT ", durit, " minutos")
+    print("duracion finca ", durfin, " minutos")
+    print("duracion Fabricacion ", durfab, " minutos")
+    print("duracion Soporte y Servicio ", dursop, " minutos")
+    print("duracion Legal ", durcob, " minutos")
+    print("duracion Cobros ", durpro, " minutos")
+    print("duracion Proveedores ", durpro, " minutos")
+    print("duracion Organizacion ", duror, " minutos")
+    print("duracion SGC ", dursgc, " minutos")
+    print("duracion SST ", dursst, " minutos")
+    print("duracion I&D ", durid, " minutos")
+    print("duracion Publicidad ", durpub, " minutos")
+
     fig = plt.figure()
     ax = fig.add_axes([0,0,1,1])
     
-    students = [ durclientes, durcontabilidad, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ]
+    students = [ durclientes, durcontabilidad, durit, durfin, durfab, dursop,durleg,durcob,durpro,duror,dursgc,dursst,durid,durpub ]
     ax.bar(langs,students)
     plt.show()
