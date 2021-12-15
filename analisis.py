@@ -51,47 +51,69 @@ def info():
     labores = [_[0] for _ in tuplelab]
 
     i = 0
+    c = 0
+    co = 0
+    durclientes = 0
+    durcontabilidad = 0
+    durhorasdia = 480
+    durit = 0
+    durfin = 0
+    durfab = 0
+    dursop = 0
+    durleg = 0
+    durcob = 0
+    durpro = 0
+    duror = 0
+    dursgc = 0
+    dursst = 0
+    durid = 0
+    durpub = 0
+    
     while i < len(horas) - 1:
         if (horas[i + 1].day == horas[i].day):
             if (labores[i] != labores[i - 1]):
                 #print(labores[i], labores[i + 1])
                 #print(ids[i], horas[i])
                 if (labores[i] == langs[0]):
-                    durclientes = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    c = c + 1
+                    durclientes = durclientes + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
+                    print(c, labores[i - 1], horas[i - 1], labores[i], horas[i], labores[i + 1], horas[i + 1], durclientes)
                 elif (labores[i] == langs[1]):
-                    durcontabilidad = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    co = co + 1
+                    durcontabilidad = durcontabilidad + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
+                    print(c, labores[i - 1], horas[i - 1], labores[i], horas[i], labores[i + 1], horas[i + 1], durcontabilidad)
                 elif (labores[i] == langs[2]):
-                    durit = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    durit = durit + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[3]):
-                    durfin = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    durfin = durfin + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[4]):
-                    durfab = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    durfab = durfab + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[5]):
-                    dursop = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    dursop = dursop + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[6]):
-                    durleg = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    durleg = durleg + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[7]):
-                    durcob = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    durcob = durcob + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[8]):
-                    durpro = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    durpro = durpro + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[9]):
-                    duror = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    duror = duror + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[10]):
-                    dursgc = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    dursgc = dursgc + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[11]):
-                    dursst = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    dursst = dursst + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[12]):
-                    durid = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
+                    durid = durid + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[13]):
-                    durpub = int((horas[i].timestamp() - horas[i - 1].timestamp())/60)
-
+                    durpub = durpub + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
         else:
-            pass
-            #print("Otros dias ", ids[i], horas[i])
+            durhorasdia = durhorasdia + int((horas[i + 1].timestamp() - horas[i].timestamp())/3600)
+            print("Otros dias ", ids[i], horas[i], durhorasdia)
             '''for x in langs:
                 print(x)'''
         i = i + 1
-    print("duracion clientes ", durclientes, " minutos")
+    print(durhorasdia)
+    '''print("duracion clientes ", durclientes, " minutos")
     print("duracion contabilidad ", durcontabilidad, " minutos")
     print("duracion IT ", durit, " minutos")
     print("duracion finca ", durfin, " minutos")
@@ -104,11 +126,11 @@ def info():
     print("duracion SGC ", dursgc, " minutos")
     print("duracion SST ", dursst, " minutos")
     print("duracion I&D ", durid, " minutos")
-    print("duracion Publicidad ", durpub, " minutos")
+    print("duracion Publicidad ", durpub, " minutos")'''
 
     fig = plt.figure()
     ax = fig.add_axes([0,0,1,1])
     
-    students = [ durclientes, durcontabilidad, durit, durfin, durfab, dursop,durleg,durcob,durpro,duror,dursgc,dursst,durid,durpub ]
+    students = [ durclientes/durhorasdia, durcontabilidad/durhorasdia, durit/durhorasdia, durfin/durhorasdia, durfab/durhorasdia, dursop/durhorasdia,durleg/durhorasdia,durcob/durhorasdia,durpro/durhorasdia,duror/durhorasdia,dursgc/durhorasdia,dursst/durhorasdia,durid/durhorasdia,durpub/durhorasdia ]
     ax.bar(langs,students)
     plt.show()
