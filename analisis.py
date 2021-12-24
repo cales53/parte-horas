@@ -12,7 +12,7 @@ port='1433'
 bd = 'Parte Horas' 
 usuario = 'usuario' 
 contrasena = 'Manager21' 
-langs = ['Clientes','Contabilidad','IT','Finca','Fabricación','Soporte Remoto','Legal','Cobros','Proveedores','Organización','SGC','SST','I&D','Publicidad']
+langs = ['duracion dia','Clientes','Contabilidad','IT','Finca','Fabricación','Soporte Remoto','Legal','Cobros','Proveedores','Organización','SGC','SST','I&D','Publicidad']
 
 def info():
     try:
@@ -53,6 +53,7 @@ def info():
     i = 0
     c = 0
     co = 0
+    csop = 0
     durclientes = 0
     durcontabilidad = 0
     durhorasdia = 480
@@ -81,7 +82,7 @@ def info():
                 elif (labores[i] == langs[1]):
                     co = co + 1
                     durcontabilidad = durcontabilidad + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
-                    print(c, labores[i - 1], horas[i - 1], labores[i], horas[i], labores[i + 1], horas[i + 1], durcontabilidad)
+                    #print(co, labores[i - 1], horas[i - 1], labores[i], horas[i], labores[i + 1], horas[i + 1], durcontabilidad)
                 elif (labores[i] == langs[2]):
                     durit = durit + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[3]):
@@ -89,7 +90,9 @@ def info():
                 elif (labores[i] == langs[4]):
                     durfab = durfab + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[5]):
+                    csop = csop + 1
                     dursop = dursop + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
+                    print(csop, labores[i - 1], horas[i - 1], labores[i], horas[i], labores[i + 1], horas[i + 1], dursop)
                 elif (labores[i] == langs[6]):
                     durleg = durleg + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[7]):
@@ -108,7 +111,7 @@ def info():
                     durpub = durpub + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
         else:
             durhorasdia = durhorasdia + int((horas[i + 1].timestamp() - horas[i].timestamp())/3600)
-            print("Otros dias ", ids[i], horas[i], durhorasdia)
+            #print("Otros dias ", ids[i], horas[i], durhorasdia)
             '''for x in langs:
                 print(x)'''
         i = i + 1
@@ -131,6 +134,6 @@ def info():
     fig = plt.figure()
     ax = fig.add_axes([0,0,1,1])
     
-    students = [ durclientes/durhorasdia, durcontabilidad/durhorasdia, durit/durhorasdia, durfin/durhorasdia, durfab/durhorasdia, dursop/durhorasdia,durleg/durhorasdia,durcob/durhorasdia,durpro/durhorasdia,duror/durhorasdia,dursgc/durhorasdia,dursst/durhorasdia,durid/durhorasdia,durpub/durhorasdia ]
+    students = [ durhorasdia/durhorasdia, durclientes, durcontabilidad, durit, durfin, durfab, dursop,durleg,durcob,durpro,duror,dursgc,dursst,durid,durpub ]
     ax.bar(langs,students)
     plt.show()
