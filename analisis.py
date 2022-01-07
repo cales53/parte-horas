@@ -69,6 +69,7 @@ def info():
     dursst = 0
     durid = 0
     durpub = 0
+    est = 1
     
     while i < len(horas) - 1:
         if (horas[i + 1].day == horas[i].day):
@@ -109,9 +110,12 @@ def info():
                     durid = durid + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[13]):
                     durpub = durpub + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
+            elif (labores[i] == 'Horas Trabajadas'):
+                est = -1*est
+                print(est, labores[i], horas[i].day)
         else:
             durhorasdia = durhorasdia + int((horas[i + 1].timestamp() - horas[i].timestamp())/3600)
-            #print("Otros dias ", ids[i], horas[i], durhorasdia)
+            print("Otros dias ", ids[i], horas[i], horas[i + 1], durhorasdia)
             '''for x in langs:
                 print(x)'''
         i = i + 1
