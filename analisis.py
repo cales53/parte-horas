@@ -35,7 +35,7 @@ def info():
             tupleall = cursor.fetchall()
             horas = [_[0] for _ in tupleall]
             #fecha = time.strftime("%Y-%m-%d %H:%M:%S.000", horas[0])
-
+    
     cursor = conexion.cursor()
     consulta = "select hora from Labores;"
     cursor.execute(consulta)
@@ -69,6 +69,7 @@ def info():
     dursst = 0
     durid = 0
     durpub = 0
+    cdia = 0
     
     while i < len(horas) - 1:
         if (horas[i + 1].day == horas[i].day):
@@ -78,7 +79,7 @@ def info():
                 if (labores[i] == langs[0]):
                     c = c + 1
                     durclientes = durclientes + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
-                    print(c, labores[i - 1], horas[i - 1], labores[i], horas[i], labores[i + 1], horas[i + 1], durclientes)
+                    #print(c, labores[i - 1], horas[i - 1], labores[i], horas[i], labores[i + 1], horas[i + 1], durclientes)
                 elif (labores[i] == langs[1]):
                     co = co + 1
                     durcontabilidad = durcontabilidad + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
@@ -92,7 +93,7 @@ def info():
                 elif (labores[i] == langs[5]):
                     csop = csop + 1
                     dursop = dursop + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
-                    print(csop, labores[i - 1], horas[i - 1], labores[i], horas[i], labores[i + 1], horas[i + 1], dursop)
+                    #print(csop, labores[i - 1], horas[i - 1], labores[i], horas[i], labores[i + 1], horas[i + 1], dursop)
                 elif (labores[i] == langs[6]):
                     durleg = durleg + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[7]):
@@ -109,9 +110,14 @@ def info():
                     durid = durid + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
                 elif (labores[i] == langs[13]):
                     durpub = durpub + int((horas[i + 1].timestamp() - horas[i].timestamp())/60)
+                elif(labores[i] == 'Horas Trabajadas'):
+                    print(cdia)
+                    cdia = cdia + 1
+                    if (cdia == 2):
+                        print(cdia)
         else:
             durhorasdia = durhorasdia + int((horas[i + 1].timestamp() - horas[i].timestamp())/3600)
-            print("Otros dias ", ids[i], horas[i], horas[i + 1], durhorasdia)
+            #print("Otros dias ", ids[i], horas[i], horas[i + 1], durhorasdia)
             '''for x in langs:
                 print(x)'''
         i = i + 1

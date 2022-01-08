@@ -27,6 +27,7 @@ except:
         conexion = pyodbc.connect("DRIVER={ODBC Driver 11 for SQL Server}; SERVER="+sv+"; port="+port+";DATABASE="+bd+";UID="+usuario+";PWD="+contrasena)
 
 def Actualizardb():
+    nombre_cb.delete(0, tk.END)
     named_tuple = time.localtime() # get struct_time
     fecha = time.strftime("%Y-%m-%d %H:%M:%S.000", named_tuple)
     cursor = conexion.cursor()
